@@ -96,5 +96,26 @@ private Plataforma plataforma;
 	    assertTrue(albumes.contains(album1));
 	    assertTrue(albumes.contains(album2));
 	  }
+	  
+	  @Test
+	  public void ObtenerListaDeTodasLasCancionesDeLaPlataforma() {
+	    Artista artista = plataforma.crearArtista("Queen", "Rock");
+	    Album album = plataforma.crearAlbum("Sheer Heart Attack", artista, 1980);
+	    Cancion cancion1 = plataforma.crearCancion("Misfire", artista, album, 2);
+	    Cancion cancion2 = plataforma.crearCancion("Stone Cold Crazy", artista, album, 2);
+	    Set<Cancion> canciones = plataforma.getTodasLasCanciones();
+	    assertEquals(2, canciones.size());
+	    assertTrue(canciones.contains(cancion1));
+	    assertTrue(canciones.contains(cancion2));
+	  }
+	 
+	  
+	  @Test
+	  public void ObtenerPlaylistPorNombre() {
+	    Usuario usuario = plataforma.registrarUsuario("Patricio", "password");
+	    Playlist playlist = plataforma.crearPlaylist("Mi playlist", usuario);
+	    Playlist playlistObtenida = plataforma.getPlaylistPorNombre("Mi playlist");
+	    assertEquals(playlist, playlistObtenida);
+	  }
 
 }
