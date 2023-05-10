@@ -2,6 +2,8 @@ package plataformaMusical;
 
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,6 +50,51 @@ private Plataforma plataforma;
 	    assertEquals("Misfire", cancion.getTitulo());
 	    assertEquals(artista, cancion.getArtista());
 	    assertEquals(album, cancion.getAlbum());
+	  }
+	  
+	  @Test
+	  public void AgregarCancionesAUnaPlaylist() {
+	    Usuario usuario = plataforma.registrarUsuario("patricio", "password");
+	    Artista artista = plataforma.crearArtista("Queen", "Rock");
+	    Album album = plataforma.crearAlbum("Sheer Heart Attack", artista, 1980);
+	    Cancion cancion = plataforma.crearCancion("Misfire", artista, album, 2);
+	    Playlist playlist = plataforma.crearPlaylist("Mi playlist", usuario);
+	    assertTrue(playlist.agregarCancion(cancion));
+	    assertTrue(playlist.getCanciones().contains(cancion));
+	  }
+	  
+	  @Test
+	  public void EliminarCancionesDeUnaPlaylist() {
+		Usuario usuario = plataforma.registrarUsuario("patricio", "password");
+		Artista artista = plataforma.crearArtista("Queen", "Rock");
+		Album album = plataforma.crearAlbum("Sheer Heart Attack", artista, 1980);
+		Cancion cancion = plataforma.crearCancion("Misfire", artista, album, 2);
+		Playlist playlist = plataforma.crearPlaylist("Mi playlist", usuario);
+	    playlist.agregarCancion(cancion);
+	    assertTrue(playlist.eliminarCancion(cancion));
+	    assertFalse(playlist.getCanciones().contains(cancion));
+	  }
+	  
+	  @Test
+	  public void ObtenerListaDeTodosLosArtistasDeLaPlataforma() {
+	    Artista artista1 = plataforma.crearArtista("Queen", "Rock");
+	    Artista artista2 = plataforma.crearArtista("David Bowie", "Rock");
+	    Set<Artista> artistas = plataforma.getTodosLosArtistas();
+	    assertEquals(2, artistas.size());
+	    assertTrue(artistas.contains(artista1));
+	    assertTrue(artistas.contains(artista2));
+	  }
+	  
+	  @Test
+	  public void ObtenerListaDeTodosLosAlbumnesDeLaPlataforma() {
+	    Artista artista1 = plataforma.crearArtista("Queen", "Rock");
+	    Artista artista2 = plataforma.crearArtista("David Bowie", "Rock");
+	    Album album1 = plataforma.crearAlbum("Sheer Heart Attack", artista1, 1980);
+	    Album album2 = plataforma.crearAlbum("Space Oddity", artista2, 1978);
+	    Set<Album> albumes = plataforma.getTodosLosAlbumes();
+	    assertEquals(2, albumes.size());
+	    assertTrue(albumes.contains(album1));
+	    assertTrue(albumes.contains(album2));
 	  }
 
 }
