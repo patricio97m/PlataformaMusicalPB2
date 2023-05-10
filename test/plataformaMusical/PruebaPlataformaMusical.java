@@ -2,6 +2,7 @@ package plataformaMusical;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -116,6 +117,25 @@ private Plataforma plataforma;
 	    Playlist playlist = plataforma.crearPlaylist("Mi playlist", usuario);
 	    Playlist playlistObtenida = plataforma.getPlaylistPorNombre("Mi playlist");
 	    assertEquals(playlist, playlistObtenida);
+	  }
+	  
+	  @Test
+	  public void ObtenerUsuarioPorNombre() {
+	    Usuario usuario = plataforma.registrarUsuario("Patricio", "password");
+	    Usuario usuarioObtenido = plataforma.getusuarioPorNombre("Patricio");
+	    assertEquals(usuario, usuarioObtenido);
+	  }
+	  
+	  @Test
+	  public void ObtenerTodasLasPlaylistDeLaPlataforma() {
+	    Usuario usuario1 = plataforma.registrarUsuario("Patricio", "password");
+	    Usuario usuario2 = plataforma.registrarUsuario("Rocio", "password");
+	    Playlist playlist1 = plataforma.crearPlaylist("Playlist de Patricio", usuario1);
+	    Playlist playlist2 = plataforma.crearPlaylist("Playlist de Rocio", usuario2);
+	    List<Playlist> playlists = plataforma.getTodasLasPlaylist();
+	    assertEquals(2, playlists.size());
+	    assertTrue(playlists.contains(playlist1));
+	    assertTrue(playlists.contains(playlist2));
 	  }
 
 }
