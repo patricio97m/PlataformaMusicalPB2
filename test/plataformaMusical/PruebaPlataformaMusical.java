@@ -2,6 +2,7 @@ package plataformaMusical;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -136,6 +137,55 @@ private Plataforma plataforma;
 	    assertEquals(2, playlists.size());
 	    assertTrue(playlists.contains(playlist1));
 	    assertTrue(playlists.contains(playlist2));
+	  }
+	  
+	  @Test
+	  public void QueNoSePuedaCrearCancionesDuplicadasEnLaPlaylist() {
+		Usuario usuario1 = plataforma.registrarUsuario("Patricio", "password");
+	    Artista artista = plataforma.crearArtista("Queen", "Rock");
+	    Album album = plataforma.crearAlbum("Sheer Heart Attack", artista, 1980);
+	    Cancion cancion = plataforma.crearCancion("Mistify", artista, album, 2);
+	    Playlist playlist = plataforma.crearPlaylist("Mi playlist", usuario1);
+	    assertTrue(playlist.agregarCancion(cancion));
+	    assertFalse(playlist.agregarCancion(cancion)); //La canción no debería agregarse dos veces
+	    assertTrue(playlist.getCanciones().contains(cancion));
+	    }
+	  
+	  @Test
+	  public void ObtenerCancionesDeUnaPlaylist() {
+	      Usuario usuario1 = plataforma.registrarUsuario("Patricio", "password");
+	      Artista artista = plataforma.crearArtista("Queen", "Rock");
+	      Album album = plataforma.crearAlbum("Sheer Heart Attack", artista, 1980);
+	      Cancion cancion1 = plataforma.crearCancion("Mistify", artista, album, 2);
+	      Cancion cancion2 = plataforma.crearCancion("Sheer Heart Attack", artista, album, 2);
+	      Playlist playlist = plataforma.crearPlaylist("Mi playlist", usuario1);
+	      assertTrue(playlist.agregarCancion(cancion1));
+	      assertTrue(playlist.agregarCancion(cancion2));
+	      
+	      Set<Cancion> cancionesEnPlaylist = playlist.getCanciones();
+	      Set<Cancion> cancionesEsperadas = new LinkedHashSet<>();
+	      cancionesEsperadas.add(cancion1);
+	      cancionesEsperadas.add(cancion2);
+	      assertEquals(cancionesEnPlaylist, cancionesEsperadas);
+	  }
+	  
+	  @Test
+	  public void ObtenerCancionesDeUnDisco() {
+	      Artista artista = plataforma.crearArtista("Queen", "Rock");
+	      Album album = plataforma.crearAlbum("Sheer Heart Attack", artista, 1980);
+	      Cancion cancion1 = plataforma.crearCancion("Mistify", artista, album, 120);
+	      Cancion cancion2 = plataforma.crearCancion("Sheer Heart Attack", artista, album, 130);
+	      Cancion cancion3 = plataforma.crearCancion("Stone Cold Crazy", artista, album, 150);
+	      album.agregarCancion(cancion1);
+	      album.agregarCancion(cancion2);
+	      album.agregarCancion(cancion3);
+	      
+	      Set<Cancion> cancionesEnElDisco = album.getCanciones();
+	      Set<Cancion> cancionesEsperadas = new LinkedHashSet<>();
+	      cancionesEsperadas.add(cancion1);
+	      cancionesEsperadas.add(cancion2);
+	      cancionesEsperadas.add(cancion3);
+	      assertEquals(cancionesEnElDisco, cancionesEsperadas);
 	  }
 
 }
