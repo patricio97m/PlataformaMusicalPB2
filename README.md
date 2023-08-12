@@ -3,7 +3,7 @@
 
 Programa basado en una plataforma musical online permite a los usuarios escuchar y crear listas de reproducción de canciones. La plataforma contiene información sobre artistas, álbumes y canciones.
 
-Un artista tiene un nombre y un género musical. Un álbum tiene un título, un artista, un año de lanzamiento y una lista de canciones. Una canción tiene un título, un artista, un álbum y una duración. Para representar los elementos en común que tienen "Album" y "Cancion" se utilizó la clase abtracta "Multimedia". 
+Un artista tiene un nombre y un género musical. Un álbum tiene un título, un artista, un año de lanzamiento y una lista de canciones. Una canción tiene un título, un artista, un álbum y una duración. Para representar los elementos en común que tienen "Album" y "Cancion" se utilizó la clase abstracta "Multimedia". 
 
 Un usuario puede registrarse en la plataforma con un nombre de usuario y una contraseña. Una vez registrado, el usuario puede buscar artistas, álbumes y canciones. Además, el usuario puede crear listas de reproducción y agregar canciones a ellas.
 
